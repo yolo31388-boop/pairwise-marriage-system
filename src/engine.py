@@ -1,41 +1,36 @@
-"""结婚系统 - 带7个bug"""
-from dataclasses import dataclass, field
-from datetime import datetime
+"""结婚系统入口(兼容旧导入路径, 实现在 marriage/system.py)"""
+import os
+import sys
 
-@dataclass
-class Marriage:
-    husband: str
-    wife: str
-    marry_time: float
-    intimacy: int
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-class MarriageSystem:
-    def __init__(self):
-        self.marriages: list[Marriage] = []
-        self.shared_inventory = {}  # bug5: 未实现
+from marriage.system import (  # noqa: E402,F401
+    FORCED_DIVORCE_OTHER_RATIO,
+    FORCED_DIVORCE_PROPOSER_RATIO,
+    Marriage,
+    MarriageSystem,
+    PROPOSE_MIN_LEVEL,
+    SKILL_BASE_CHANCE,
+    SKILL_INTIMACY_CAP,
+    SKILL_MAX_CHANCE,
+    SKILL_YEARS_CAP,
+    TELEPORT_BANNED_SCENES,
+    TELEPORT_COOLDOWN,
+    WAREHOUSE_CAPACITY,
+    WEDDING_REWARDS,
+    WEDDING_TIER_ALIASES,
+    YEAR_SECONDS,
+)
 
-    def propose(self, p1, p2, level):
-        # bug1: 不检查单身
-        if level >= 30:
-            return True
-        return False
-
-    def get_wedding_reward(self, tier):
-        # bug2: 固定奖励
-        return {"gold": 1000}
-
-    def get_couple_skill_chance(self, marriage):
-        # bug3: 固定概率
-        return 0.2
-
-    def divorce(self, proposer, marriage):
-        # bug4: 提出方净身出户
-        return {"proposer_get": 0, "other_get": "all"}
-
-    def get_anniversary_reward(self, marriage, year):
-        # bug6: 无记录
-        return {"gift": "rose"}
-
-    def couple_teleport(self, p1, p2, scene):
-        # bug7: 无冷却无限制
-        return True
+__all__ = [
+    "Marriage",
+    "MarriageSystem",
+    "PROPOSE_MIN_LEVEL",
+    "SKILL_BASE_CHANCE",
+    "SKILL_MAX_CHANCE",
+    "TELEPORT_COOLDOWN",
+    "TELEPORT_BANNED_SCENES",
+    "WAREHOUSE_CAPACITY",
+    "WEDDING_REWARDS",
+    "YEAR_SECONDS",
+]
